@@ -62,6 +62,10 @@ PGresult* rollback(PGconn* conn) {
     return PQexec(conn, "ROLLBACK TRANSACTION");
 }
 
+void closeConnection(PGconn *conn) {
+    PQfinish(conn);
+}
+
 PGconn* createConnection() {
     PGconn *conn = PQconnectdb(conninfo);
     if (PQstatus(conn) != CONNECTION_OK) {
@@ -86,20 +90,28 @@ QueryResult* makeQuery(char* query) {
     PGconn* conn;
     QueryResult* queryRes;
     PGresult* res;
+    fprintf(stdout, "Starting making query: %s\n", query);
 
     if ((conn = createConnection()) == NULL) {
         perror("Connection closed");
         return NULL;
     }
+
     if ((res = begin(conn)) == NULL) {
-        return NULL;
-    }
-    if ((queryRes = queryExec(conn, query)) == NULL) {
-        return NULL;
-    }
-    if ((res = commit(conn)) == NULL) {
+        closeConnection(conn);
         return NULL;
     }
 
+    if ((queryRes = queryExec(conn, query)) == NULL) {
+        closeConnection(conn);
+        return NULL;
+    }
+
+    if ((res = commit(conn)) == NULL) {
+        closeConnection(conn);
+        return NULL;
+    }
+
+    closeConnection(conn); // Close connection after successful execution
     return queryRes;
 }

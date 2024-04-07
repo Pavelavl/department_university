@@ -1,0 +1,92 @@
+/* Form styles */
+form {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 15px;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
+    background-color: #f8f8f8;
+}
+
+form * {
+    font-size: 20px;
+    margin: 5px 0;
+}
+
+/* Input styles */
+input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Button styles */
+button {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #eee;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #f8f8f8;
+}
+
+/* Tab styles */
+.tabs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-bottom: none; /* Remove bottom border for active tab */
+    border-radius: 5px 5px 0 0;
+    background-color: #f8f8f8;
+}
+
+.tab.active {
+    background-color: #eee;
+    border-bottom: 1px solid #eee; /* Match bottom border with background */ 
+}
+
+/* Tab content styles */
+.tab-content {
+    display: none;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-top: none; /* Remove top border for active tab content */
+    border-radius: 0 0 5px 5px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Table styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+th {
+  background-color: #eee;
+}
+
+tr:nth-child(even) {
+  background-color: #f8f8f8;
+}

@@ -39,7 +39,6 @@ int main(int argc, char** argv) {
             fprintf(stderr, "Unable to accept client: %s\n", strerror(errno));
         } else if (!_stopFlag) {
             fprintf(stdout, "Accepted client from %s\n", inet_ntoa(adr.sin_addr));
-            
             nRead = Read(fd, buf, sizeof(buf));
             if (nRead == -1) {
                 close(fd);
@@ -48,13 +47,10 @@ int main(int argc, char** argv) {
             } else {
                 buf[nRead] = '\0';
 
-                // Парсим HTTP-запрос, извлекаем метод и URL
                 char method[5];
                 char url[128];
                 sscanf(buf, "%4s %127s", method, url);
                 char* body = strstr(buf, "\r\n\r\n");
-
-                // Простой роутер для метода GET
                 if (strncmp(method, "POST", 4) == 0 && body != NULL) {
                     body += 4;
                     int res;
@@ -67,10 +63,32 @@ int main(int argc, char** argv) {
                     if (res == -1) {
                         perror("Request failed\n");
                     }
+                } else if (strncmp(method, "GET", 3) == 0) {
+                    if (strncmp(url, "/main.js", 8) == 0) {
+                        int res = handle_js(fd);
+                        if (res == -1) {
+                            perror("Request failed\n");
+                        }
+                    } else if (strncmp(url, "/styles.css", 11) == 0) {
+                        int res = handle_css(fd);
+                        if (res == -1) {
+                            perror("Request failed\n");
+                        }
+                    } else if (strncmp(url, "/", 1) == 0) {
+                        int res = handle_index(fd);
+                        if (res == -1) {
+                            perror("Request failed\n");
+                        }
+                    } else {
+                        int res = handle_not_found(fd);
+                        if (res == -1) {
+                            perror("Request failed\n");
+                        }
+                    }
                 } else {
-                    // Добавьте обработку других методов или роутов по мере необходимости
                     write(fd, "HTTP/1.1 405 Method Not Allowed\r\n\r\n", 35);
                 }
+                fprintf(stdout, "Connection from %s ended\n", inet_ntoa(adr.sin_addr));
                 close(fd);
             }
         }
