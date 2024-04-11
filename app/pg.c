@@ -78,8 +78,8 @@ PGconn* createConnection() {
 
 QueryResult* queryExec(PGconn* conn, char* query) {
     PGresult* res = PQexec(conn, query);
-    if (PQresultStatus(res) != PGRES_TUPLES_OK) {
-        fprintf(stderr, "FETCH ALL failed: %s", PQerrorMessage(conn));
+    if (PQresultStatus(res) == PGRES_FATAL_ERROR) {
+        fprintf(stderr, "FATAL ERROR failed: %s", PQerrorMessage(conn));
         PQclear(res);
         return NULL;
     }

@@ -54,7 +54,7 @@ int main(int argc, char** argv) {
                 if (strncmp(method, "POST", 4) == 0 && body != NULL) {
                     body += 4;
                     int res;
-                    if (strncmp(url, "/get_data", 9) == 0) {
+                    if (strncmp(url, "/query", 9) == 0) {
                         res = handle_post(fd, body);
                     } else {
                         res = handle_not_found(fd);

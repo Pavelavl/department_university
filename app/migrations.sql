@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS teachers (
     teacher_id SERIAL PRIMARY KEY,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
-    department_id INT REFERENCES departments(department_id),
+    department_id INT REFERENCES departments(department_id) ON DELETE CASCADE,
     created_at timestamptz not null,
     updated_at timestamptz
 );
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS students (
     student_id SERIAL PRIMARY KEY,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
-    department_id INT REFERENCES departments(department_id),
+    department_id INT REFERENCES departments(department_id) ON DELETE CASCADE,
     created_at timestamptz not null,
     updated_at timestamptz
 );
@@ -41,7 +41,7 @@ insert into students (first_name, last_name, department_id, created_at, updated_
 CREATE TABLE IF NOT EXISTS courses (
     course_id SERIAL PRIMARY KEY,
     course_name VARCHAR(50),
-    department_id INT REFERENCES departments(department_id),
+    department_id INT REFERENCES departments(department_id) ON DELETE CASCADE,
     created_at timestamptz not null,
     updated_at timestamptz
 );
@@ -53,7 +53,7 @@ insert into courses (course_name, department_id, created_at, updated_at) values 
 CREATE TABLE IF NOT EXISTS groups (
     group_id SERIAL PRIMARY KEY,
     group_name VARCHAR(50),
-    course_id INT REFERENCES courses(course_id),
+    course_id INT REFERENCES courses(course_id) ON DELETE CASCADE,
     created_at timestamptz not null,
     updated_at timestamptz
 );
@@ -66,7 +66,7 @@ insert into groups (group_name, course_id, created_at, updated_at) values ('Grou
 CREATE TABLE IF NOT EXISTS subjects (
     subject_id SERIAL PRIMARY KEY,
     subject_name VARCHAR(50),
-    department_id INT REFERENCES departments(department_id),
+    department_id INT REFERENCES departments(department_id) ON DELETE CASCADE,
     created_at timestamptz not null,
     updated_at timestamptz
 );
@@ -78,8 +78,8 @@ insert into subjects (subject_name, department_id, created_at, updated_at) value
 -- Таблица оценок
 CREATE TABLE IF NOT EXISTS grades (
     grade_id SERIAL PRIMARY KEY,
-    student_id INT REFERENCES students(student_id),
-    subject_id INT REFERENCES subjects(subject_id),
+    student_id INT REFERENCES students(student_id) ON DELETE CASCADE,
+    subject_id INT REFERENCES subjects(subject_id) ON DELETE CASCADE,
     grade_value INT,
     created_at timestamptz not null,
     updated_at timestamptz
@@ -121,15 +121,15 @@ CREATE TABLE IF NOT EXISTS lesson_types (
 -- Таблица распределения преподавателей по предметам
 CREATE TABLE IF NOT EXISTS teacher_subjects (
     teacher_subject_id SERIAL PRIMARY KEY,
-    teacher_id INT REFERENCES teachers(teacher_id),
-    subject_id INT REFERENCES subjects(subject_id),
+    teacher_id INT REFERENCES teachers(teacher_id) ON DELETE CASCADE,
+    subject_id INT REFERENCES subjects(subject_id) ON DELETE CASCADE,
     created_at timestamptz not null,
     updated_at timestamptz
 );
 -- Таблица материалов курсов
 CREATE TABLE IF NOT EXISTS course_materials (
     material_id SERIAL PRIMARY KEY,
-    course_id INT REFERENCES courses(course_id),
+    course_id INT REFERENCES courses(course_id) ON DELETE CASCADE,
     material_name VARCHAR(100),
     material_url VARCHAR(255),
     created_at timestamptz not null,
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS events (
     event_id SERIAL PRIMARY KEY,
     event_name VARCHAR(100),
     event_date DATE,
-    department_id INT REFERENCES departments(department_id),
+    department_id INT REFERENCES departments(department_id) ON DELETE CASCADE,
     created_at timestamptz not null,
     updated_at timestamptz
 );
@@ -158,7 +158,7 @@ insert into languages (language_name, created_at, updated_at) values ('English',
 -- Таблица исследований преподавателей
 CREATE TABLE IF NOT EXISTS teacher_research (
     research_id SERIAL PRIMARY KEY,
-    teacher_id INT REFERENCES teachers(teacher_id),
+    teacher_id INT REFERENCES teachers(teacher_id) ON DELETE CASCADE,
     research_title VARCHAR(100),
     research_description TEXT,
     created_at timestamptz not null,
@@ -167,7 +167,7 @@ CREATE TABLE IF NOT EXISTS teacher_research (
 -- Таблица стажировок преподавателей
 CREATE TABLE IF NOT EXISTS teacher_internships (
     internship_id SERIAL PRIMARY KEY,
-    teacher_id INT REFERENCES teachers(teacher_id),
+    teacher_id INT REFERENCES teachers(teacher_id) ON DELETE CASCADE,
     internship_organization VARCHAR(100),
     internship_duration INT,
     created_at timestamptz not null,
@@ -177,7 +177,7 @@ CREATE TABLE IF NOT EXISTS teacher_internships (
 CREATE TABLE IF NOT EXISTS curriculums (
     curriculum_id SERIAL PRIMARY KEY,
     curriculum_name VARCHAR(100),
-    department_id INT REFERENCES departments(department_id),
+    department_id INT REFERENCES departments(department_id) ON DELETE CASCADE,
     created_at timestamptz not null,
     updated_at timestamptz
 );
@@ -189,17 +189,17 @@ insert into curriculums (curriculum_name, department_id, created_at, updated_at)
 -- Таблица учебных планов
 CREATE TABLE IF NOT EXISTS study_plans (
     study_plan_id SERIAL PRIMARY KEY,
-    curriculum_id INT REFERENCES curriculums(curriculum_id),
-    course_id INT REFERENCES courses(course_id),
-    subject_id INT REFERENCES subjects(subject_id),
+    curriculum_id INT REFERENCES curriculums(curriculum_id) ON DELETE CASCADE,
+    course_id INT REFERENCES courses(course_id) ON DELETE CASCADE,
+    subject_id INT REFERENCES subjects(subject_id) ON DELETE CASCADE,
     created_at timestamptz not null,
     updated_at timestamptz
 );
 -- Таблица оценочных листов
 CREATE TABLE IF NOT EXISTS grade_sheets (
     grade_sheet_id SERIAL PRIMARY KEY,
-    student_id INT REFERENCES students(student_id),
-    course_id INT REFERENCES courses(course_id),
+    student_id INT REFERENCES students(student_id) ON DELETE CASCADE,
+    course_id INT REFERENCES courses(course_id) ON DELETE CASCADE,
     grades_json JSONB,
     created_at timestamptz not null,
     updated_at timestamptz
@@ -208,7 +208,7 @@ CREATE TABLE IF NOT EXISTS grade_sheets (
 CREATE TABLE IF NOT EXISTS student_projects (
     project_id SERIAL PRIMARY KEY,
     project_name VARCHAR(100),
-    student_id INT REFERENCES students(student_id),
+    student_id INT REFERENCES students(student_id) ON DELETE CASCADE,
     project_description TEXT,
     created_at timestamptz not null,
     updated_at timestamptz
@@ -216,8 +216,8 @@ CREATE TABLE IF NOT EXISTS student_projects (
 -- Таблица иностранных языков
 CREATE TABLE IF NOT EXISTS foreign_languages (
     foreign_language_id SERIAL PRIMARY KEY,
-    language_id INT REFERENCES languages(language_id),
-    student_id INT REFERENCES students(student_id),
+    language_id INT REFERENCES languages(language_id) ON DELETE CASCADE,
+    student_id INT REFERENCES students(student_id) ON DELETE CASCADE,
     proficiency_level VARCHAR(20),
     created_at timestamptz not null,
     updated_at timestamptz

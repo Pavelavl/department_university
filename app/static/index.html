@@ -10,99 +10,101 @@
 
     <nav>
         <ul class="tabs">
-            <li data-tab-target="#creating" class="active tab">Creating</li>
-            <li data-tab-target="#updating" class="tab">Updating</li>
-            <li data-tab-target="#selecting" class="tab">Selecting</li>
+            <li data-tab-target="#forms" class="active tab">Forms</li>
+            <li data-tab-target="#upd_del" class="tab">Update & delete</li>
         </ul>
     </nav>
 
 <main>
-    <div id="selecting" class="tab-content"></div>
-    <div id="updating" class="tab-content"></div>
-    <div id="creating" class="tab-content active">
-        <h1>Creating</h1>
-    <form>
+    <div id="upd_del" class="tab-content">
+        <h1>Update & Delete</h1>
+        <span>This section allows you to update and delete records from the database.</span>
+    </div>
+    <div id="forms" class="tab-content active">
+        <h1>Forms</h1>
+        <span>This section allows you to create new records in the database.</span>
+    <form data-table="departments">
         <h2>Department Information</h2>
         <label for="title">Title:</label>
         <input type="text" id="title" name="title">
-        <button type="submit">Create</button>
+        <button data-table="departments" type="submit">Create</button>
     </form>
 
-    <form>
+    <form data-table="teachers">
         <h2>Teacher Information</h2>
         <label for="teacher_first_name">First Name:</label>
-        <input type="text" id="teacher_first_name" name="teacher_first_name">
+        <input type="text" id="teacher_first_name" name="first_name">
         <label for="teacher_last_name">Last Name:</label>
-        <input type="text" id="teacher_last_name" name="teacher_last_name">
+        <input type="text" id="teacher_last_name" name="last_name">
         <label for="teacher_department_id">Department:</label>
         <select id="teacher_department_id" name="department_id">
         </select>
-        <button type="submit">Create</button>
+        <button data-table="teachers" type="submit">Create</button>
     </form>
 
-    <form>
+    <form data-table="students">
         <h2>Student Information</h2>
         <label for="student_first_name">First Name:</label>
-        <input type="text" id="student_first_name" name="student_first_name">
+        <input type="text" id="student_first_name" name="first_name">
         <label for="student_last_name">Last Name:</label>
-        <input type="text" id="student_last_name" name="student_last_name">
+        <input type="text" id="student_last_name" name="last_name">
         <label for="student_department_id">Department:</label>
-        <select id="student_department_id" name="student_department_id">
+        <select id="student_department_id" name="department_id">
         </select>
-        <button type="submit">Create</button>
+        <button data-table="students" type="submit">Create</button>
     </form>
 
-    <form>
+    <form data-table="courses">
         <h2>Course Information</h2>
         <label for="course_name">Course Name:</label>
         <input type="text" id="course_name" name="course_name">
         <label for="course_department_id">Department:</label>
-        <select id="course_department_id" name="course_department_id">
+        <select id="course_department_id" name="department_id">
         </select>
-        <button type="submit">Create</button>
+        <button data-table="courses" type="submit">Create</button>
     </form>
 
-    <form>
+    <form data-table="groups">
         <h2>Groups</h2>
         <label for="group_name">Group Name:</label>
         <input type="text" id="group_name" name="group_name">
 
         <label for="groups_course_id">Course:</label>
-        <select id="groups_course_id" name="groups_course_id">
+        <select id="groups_course_id" name="course_id">
         </select>
 
-        <button type="submit">Create</button>
+        <button data-table="groups" type="submit">Create</button>
     </form>
 
-    <form>
+    <form data-table="subjects">
         <h2>Subjects</h2>
         <label for="subject_name">Subject Name:</label>
         <input type="text" id="subject_name" name="subject_name">
 
         <label for="subject_department_id">Department:</label>
-        <select id="subject_department_id" name="subject_department_id">
+        <select id="subject_department_id" name="department_id">
         </select>
 
-        <button type="submit">Create</button>
+        <button data-table="subjects" type="submit">Create</button>
     </form>
 
-    <form>
+    <form data-table="grades">
         <h2>Grades</h2>
         <label for="grades_student_id">Student:</label>
-        <select id="grades_student_id" name="grades_student_id">
+        <select id="grades_student_id" name="student_id">
         </select>
 
         <label for="grades_subject_id">Subject:</label>
-        <select id="grades_subject_id" name="grades_subject_id">
+        <select id="grades_subject_id" name="subject_id">
         </select>
 
         <label for="grade_value">Grade:</label>
         <input type="number" id="grade_value" name="grade_value" min="0" max="100">
 
-        <button type="submit">Create</button>
+        <button data-table="grades" type="submit">Create</button>
     </form>
 
-    <form>
+    <form data-table="classrooms">
         <h2>Classrooms</h2>
         <label for="classroom_number">Classroom Number:</label>
         <input type="text" id="classroom_number" name="classroom_number">
@@ -110,32 +112,32 @@
         <label for="capacity">Capacity:</label>
         <input type="number" id="capacity" name="capacity" min="1">
 
-        <button type="submit">Create</button>
+        <button data-table="classrooms" type="submit">Create</button>
     </form>
 
-    <form>
+    <form data-table="schedules">
         <h2>Schedules</h2>
         <label for="schedules_course_id">Course:</label>
-        <select id="schedules_course_id" name="schedules_course_id">
+        <select id="schedules_course_id" name="course_id">
         </select>
 
         <label for="schedules_group_id">Group:</label>
-        <select id="schedules_group_id" name="schedules_group_id">
+        <select id="schedules_group_id" name="group_id">
             <!-- Options populated dynamically based on available groups -->
         </select>
 
         <label for="schedules_subject_id">Subject:</label>
-        <select id="schedules_subject_id" name="schedules_subject_id">
+        <select id="schedules_subject_id" name="subject_id">
             <!-- Options populated dynamically based on available subjects -->
         </select>
 
         <label for="schedules_teacher_id">Teacher:</label>
-        <select id="schedules_teacher_id" name="schedules_teacher_id">
+        <select id="schedules_teacher_id" name="teacher_id">
             <!-- Options populated dynamically based on available teachers -->
         </select>
 
         <label for="schedules_classroom_id">Classroom:</label>
-        <select id="schedules_classroom_id" name="schedules_classroom_id">
+        <select id="schedules_classroom_id" name="classroom_id">
             <!-- Options populated dynamically based on available classrooms -->
         </select>
 
@@ -156,18 +158,18 @@
         <label for="end_time">End Time:</label>
         <input type="time" id="end_time" name="end_time">
 
-        <button type="submit">Create</button>
+        <button data-table="schedules" type="submit">Create</button>
     </form>
 
-    <form>
+    <form data-table="lesson_types">
         <h2>Lessons</h2>
         <label for="lesson_type_name">Lesson Type Name:</label>
         <input type="text" id="lesson_type_name" name="lesson_type_name">
 
-        <button type="submit">Create</button>
+        <button data-table="lesson_types" type="submit">Create</button>
     </form>
 
-    <form>
+    <form data-table="teacher_subjects">
         <h2>Teacher subjects</h2>
         <label for="subjects_teacher_id">Teacher:</label>
         <select id="subjects_teacher_id" name="teacher_id">
@@ -175,14 +177,14 @@
         </select>
 
         <label for="teacher_subject_id">Subject:</label>
-        <select id="teacher_subject_id" name="teacher_subject_id">
+        <select id="teacher_subject_id" name="subject_id">
             <!-- Options populated dynamically based on available subjects -->
         </select>
 
-        <button type="submit">Create</button>
+        <button data-table="teacher_subjects" type="submit">Create</button>
     </form>
 
-    <form>
+    <form data-table="course_materials">
         <h2>Course materials</h2>
         <label for="materials_course_id">Course:</label>
         <select id="materials_course_id" name="course_id">
@@ -195,10 +197,10 @@
         <label for="material_url">Material URL:</label>
         <input type="url" id="material_url" name="material_url">
 
-        <button type="submit">Create</button>
+        <button data-table="course_materials" type="submit">Create</button>
     </form>
 
-    <form>
+    <form data-table="events">
         <h2>Events</h2>
         <label for="event_name">Event Name:</label>
         <input type="text" id="event_name" name="event_name" required>
@@ -207,25 +209,25 @@
         <input type="date" id="event_date" name="event_date" required>
         <br>
         <label for="event_department_id">Department:</label>
-        <select id="event_department_id" name="event_department_id" required>
+        <select id="event_department_id" name="department_id" required>
             <!-- Options populated dynamically based on available departments -->
         </select>
         <br>
-        <button type="submit">Create</button>
+        <button data-table="events" type="submit">Create</button>
     </form>
 
-    <form>
+    <form data-table="languages">
         <h2>Languages</h2>
         <label for="language_name">Language Name:</label>
         <input type="text" id="language_name" name="language_name" required>
         <br>
-        <button type="submit">Create</button>
+        <button data-table="languages" type="submit">Create</button>
     </form>
 
-    <form>
+    <form data-table="teacher_research">
         <h2>Teacher Researches</h2>
         <label for="researches_teacher_id">Teacher:</label>
-        <select id="researches_teacher_id" name="researches_teacher_id" required>
+        <select id="researches_teacher_id" name="teacher_id" required>
             <!-- Options populated dynamically based on available teachers -->
         </select>
         <br>
@@ -235,10 +237,10 @@
         <label for="research_description">Research Description:</label>
         <textarea id="research_description" name="research_description"></textarea>
         <br>
-        <button type="submit">Create</button>
+        <button data-table="teacher_research" type="submit">Create</button>
     </form>
 
-    <form>
+    <form data-table="teacher_internships">
         <h2>Teacher Internships</h2>
         <label for="teacher_id">Teacher:</label>
         <select id="teacher_id" name="teacher_id" required>
@@ -251,10 +253,10 @@
         <label for="internship_duration">Duration (Months):</label>
         <input type="number" id="internship_duration" name="internship_duration" required>
         <br>
-        <button type="submit">Create</button>
+        <button data-table="teacher_internships" type="submit">Create</button>
     </form>
 
-    <form>
+    <form data-table="curriculums">
         <h2>Curriculums</h2>
         <label for="curriculum_name">Curriculum Name:</label>
         <input type="text" id="curriculum_name" name="curriculum_name" required>
@@ -264,10 +266,10 @@
             <!-- Options populated dynamically based on available departments -->
         </select>
 
-        <button type="submit">Create Curriculum</button>
+        <button data-table="curriculums" type="submit">Create Curriculum</button>
     </form>
 
-    <form>
+    <form data-table="study_plans">
         <h2>Study plans</h2>
         <label for="curriculum_id">Curriculum:</label>
         <select id="curriculum_id" name="curriculum_id" required>
@@ -275,7 +277,7 @@
         </select>
 
         <label for="plans_course_id">Course:</label>
-        <select id="plans_course_id" name="plans_course_id" required>
+        <select id="plans_course_id" name="course_id" required>
             <!-- Options populated dynamically based on available courses -->
         </select>
 
@@ -284,13 +286,13 @@
             <!-- Options populated dynamically based on available subjects -->
         </select>
 
-        <button type="submit">Create Study Plan</button>
+        <button data-table="study_plans" type="submit">Create Study Plan</button>
     </form>
 
-    <form>
+    <form data-table="grade_sheets">
         <h2>Grade sheets</h2>
         <label for="sheets_student_id">Student:</label>
-        <select id="sheets_student_id" name="sheets_student_id" required>
+        <select id="sheets_student_id" name="student_id" required>
             <!-- Options populated dynamically based on available students -->
         </select>
 
@@ -301,26 +303,26 @@
 
         <!-- Grades input will depend on specific grading system and needs to be implemented accordingly -->
 
-        <button type="submit">Create Grade Sheet</button>
+        <button data-table="grade_sheets" type="submit">Create Grade Sheet</button>
     </form>
 
-    <form>
+    <form data-table="student_projects">
         <h2>Student projects</h2>
         <label for="project_name">Project Name:</label>
         <input type="text" id="project_name" name="project_name" required>
 
         <label for="projects_student_id">Student:</label>
-        <select id="projects_student_id" name="projects_student_id" required>
+        <select id="projects_student_id" name="student_id" required>
             <!-- Options populated dynamically based on available students -->
         </select>
 
         <label for="project_description">Project Description:</label>
         <textarea id="project_description" name="project_description"></textarea>
 
-        <button type="submit">Create Project</button>
+        <button data-table="student_projects" type="submit">Create Project</button>
     </form>
 
-    <form>
+    <form data-table="foreign_languages">
         <h2>Foreign languages</h2>
         <label for="language_id">Language:</label>
         <select id="language_id" name="language_id">
@@ -340,7 +342,7 @@
             <option value="fluent">Fluent</option>
         </select>
 
-        <button type="submit">Create</button>
+        <button data-table="foreign_languages" type="submit">Create</button>
     </form>
 </div>
 </main>

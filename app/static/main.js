@@ -52,14 +52,50 @@ const getsDict = Object.keys(selectContainersNames).reduce((acc, el) => {
     acc[el] = [];
     return acc;
 }, {});
+const tabs = document.querySelectorAll('.tab');
+const tabContents = document.querySelectorAll('.tab-content');
+const updDelContainer = document.getElementById("upd_del");
+const buttons  = document.querySelectorAll('[type=submit]');
+buttons.forEach(button => {
+    button.addEventListener('click', ($event) => {
+        $event.preventDefault();
+        const table = button.dataset.table;
+        const now = (new Date()).toUTCString();
+        const inputs = [
+            ...button.parentElement.getElementsByTagName('input'),
+            ...button.parentElement.getElementsByTagName('select'),
+            ...button.parentElement.getElementsByTagName('textarea'),
+        ];
+        const columnsValues = inputs.reduce((acc, input) => {
+            acc[input.name] = input.value;
+            return acc;
+        }, {});
+        
+        for (const key in columnsValues) {
+            if (columnsValues[key] == "") {
+                alert('Please fill in all fields');
+                return;
+            }
+        }
+        columnsValues.created_at = now;
+
+        post("/query", {
+            query: `
+            INSERT INTO ${table} (${Object.keys(columnsValues).join(", ")}) VALUES (${Object.values(columnsValues).map(e => {
+                if (typeof e == "string") return "'" + e + "'"
+                return e;
+            }).join(", ")})`,
+        }).then(res => {
+            alert(`Element successfully added into table ${table}.\n ${JSON.stringify(columnsValues, null, 4)}`)
+        });
+    });
+});
+
 for (const key in selectContainersNames) {
     selectContainersNames[key] = selectContainersNames[key].map(el => {
         return document.getElementById(el);
     })
 }
-
-const tabs = document.querySelectorAll('.tab');
-const tabContents = document.querySelectorAll('.tab-content');
 
 tabs.forEach(tab => {
     tab.addEventListener('click', () => {
@@ -85,13 +121,14 @@ function post(url, body) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
-    })
-        .then((response) => response.json());
+    }).catch(err => {
+        alert("Error occured: " + err);
+    }).then((response) => response.json());
 }
 
 function init() {
-    Object.keys(selectContainersNames).forEach((tableName) => {
-        post("/get_data", {
+    [].slice.call(document.getElementsByTagName('form')).map((form) => form.dataset.table).forEach((tableName) => {
+        post("/query", {
             query: `SELECT *
                     FROM ${tableName}`,
         }).then((data) => {
@@ -125,6 +162,79 @@ function init() {
                     fillSelectContainersWithOptions(tableName, data.rows, "language_name", "language_id");
                     break;
             }
+
+            // Добавьте следующий код для добавления в контейнер HTML с идентификатором "upd_del" возможности изменять JSON-объект:
+            const jsonElementOuter = document.createElement("div");
+            jsonElementOuter.style.display = "flex";
+            jsonElementOuter.style.justifyContent = "center";
+            jsonElementOuter.style.width = "100%";
+            
+            const jsonElement = document.createElement("pre");
+            jsonElement.textContent = tableName;
+            jsonElementOuter.appendChild(jsonElement);
+            updDelContainer.appendChild(jsonElementOuter);
+
+            if (data.rows.length === 0) {
+                const noData = document.createElement("p");
+                noData.textContent = "No data found.";
+                updDelContainer.appendChild(noData);
+            }
+            data.rows.forEach(el => {
+                const container = document.createElement("form");
+
+                const jsonEditor = document.createElement("textarea");
+                jsonEditor.style.width = "100%";
+                jsonEditor.rows = 10;
+                jsonEditor.dataset.json = JSON.stringify(el);
+                jsonEditor.value = JSON.stringify(el, null, 4);
+                container.appendChild(jsonEditor);
+
+                const buttons = document.createElement("div");
+                buttons.style.display = "flex";
+                buttons.style.justifyContent = "center";
+
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.addEventListener("click", ($event) => {
+                    $event.preventDefault();
+                    post("/query", {
+                        query: `DELETE FROM ${tableName} WHERE ${Object.keys(el)[0]} = ${Object.values(el)[0]}`,
+                    }).then(res => {
+                        updDelContainer.removeChild(container);
+                        alert(`Element successfully deleted from table ${tableName}.\n ${JSON.stringify(el, null, 4)}`);
+                    });
+                });
+                buttons.appendChild(deleteButton);
+
+                const updateButton = document.createElement("button");
+                updateButton.textContent = "Update";
+                updateButton.addEventListener("click", ($event) => {
+                    $event.preventDefault();
+                    const jsonEditor = container.querySelector("textarea");
+                    let json = null;
+                    try {
+                        json = JSON.parse(jsonEditor.value);
+                    } catch (err) {
+                        alert("Error occured while parsing JSON string, check your input.");
+                        return;
+                    }
+                    if (Object.keys(json).length !== Object.keys(el).length) {
+                        alert("Incorrect input.");
+                    }
+                    post("/query", {
+                        query: `UPDATE ${tableName} SET ${Object.entries(json).slice(1).map(([key, value]) => 
+                            `${key} = ${typeof value == 'string' ? "'" + value + "'" : value}`)
+                            .join(", ")} WHERE ${Object.keys(json)[0]} = ${Object.values(json)[0]}`,
+                    }).then(res => {
+                        alert(`Element successfully updated in table ${tableName}.
+                        \nOld: ${JSON.stringify(el, null, 4)}\nNew: ${JSON.stringify(json, null, 4)}`);
+                    });
+                });
+                buttons.appendChild(updateButton);
+
+                container.appendChild(buttons);
+                updDelContainer.appendChild(container);
+            });
         });
     });
 }
