@@ -37,7 +37,7 @@
         <label for="teacher_last_name">Last Name:</label>
         <input type="text" id="teacher_last_name" name="last_name">
         <label for="teacher_department_id">Department:</label>
-        <select id="teacher_department_id" name="department_id">
+        <select id="teacher_department_id" name="department_id" data-value="title">
         </select>
         <button data-table="teachers" type="submit">Create</button>
     </form>
@@ -49,7 +49,7 @@
         <label for="student_last_name">Last Name:</label>
         <input type="text" id="student_last_name" name="last_name">
         <label for="student_department_id">Department:</label>
-        <select id="student_department_id" name="department_id">
+        <select id="student_department_id" name="department_id" data-value="title">
         </select>
         <button data-table="students" type="submit">Create</button>
     </form>
@@ -59,7 +59,7 @@
         <label for="course_name">Course Name:</label>
         <input type="text" id="course_name" name="course_name">
         <label for="course_department_id">Department:</label>
-        <select id="course_department_id" name="department_id">
+        <select id="course_department_id" name="department_id" data-value="title">
         </select>
         <button data-table="courses" type="submit">Create</button>
     </form>
@@ -70,7 +70,7 @@
         <input type="text" id="group_name" name="group_name">
 
         <label for="groups_course_id">Course:</label>
-        <select id="groups_course_id" name="course_id">
+        <select id="groups_course_id" name="course_id" data-value="course_name">
         </select>
 
         <button data-table="groups" type="submit">Create</button>
@@ -82,7 +82,7 @@
         <input type="text" id="subject_name" name="subject_name">
 
         <label for="subject_department_id">Department:</label>
-        <select id="subject_department_id" name="department_id">
+        <select id="subject_department_id" name="department_id" data-value="title">
         </select>
 
         <button data-table="subjects" type="submit">Create</button>
@@ -91,11 +91,11 @@
     <form data-table="grades">
         <h2>Grades</h2>
         <label for="grades_student_id">Student:</label>
-        <select id="grades_student_id" name="student_id">
+        <select id="grades_student_id" name="student_id" data-value="first_name">
         </select>
 
         <label for="grades_subject_id">Subject:</label>
-        <select id="grades_subject_id" name="subject_id">
+        <select id="grades_subject_id" name="subject_id" data-value="subject_name">
         </select>
 
         <label for="grade_value">Grade:</label>
@@ -118,26 +118,26 @@
     <form data-table="schedules">
         <h2>Schedules</h2>
         <label for="schedules_course_id">Course:</label>
-        <select id="schedules_course_id" name="course_id">
+        <select id="schedules_course_id" name="course_id" data-value="course_name">
         </select>
 
         <label for="schedules_group_id">Group:</label>
-        <select id="schedules_group_id" name="group_id">
+        <select id="schedules_group_id" name="group_id" data-value="group_name">
             <!-- Options populated dynamically based on available groups -->
         </select>
 
         <label for="schedules_subject_id">Subject:</label>
-        <select id="schedules_subject_id" name="subject_id">
+        <select id="schedules_subject_id" name="subject_id" data-value="subject_name">
             <!-- Options populated dynamically based on available subjects -->
         </select>
 
         <label for="schedules_teacher_id">Teacher:</label>
-        <select id="schedules_teacher_id" name="teacher_id">
+        <select id="schedules_teacher_id" name="teacher_id" data-value="first_name">
             <!-- Options populated dynamically based on available teachers -->
         </select>
 
         <label for="schedules_classroom_id">Classroom:</label>
-        <select id="schedules_classroom_id" name="classroom_id">
+        <select id="schedules_classroom_id" name="classroom_id" data-value="classroom_number">
             <!-- Options populated dynamically based on available classrooms -->
         </select>
 
@@ -172,12 +172,12 @@
     <form data-table="teacher_subjects">
         <h2>Teacher subjects</h2>
         <label for="subjects_teacher_id">Teacher:</label>
-        <select id="subjects_teacher_id" name="teacher_id">
+        <select id="subjects_teacher_id" name="teacher_id" data-value="first_name">
             <!-- Options populated dynamically based on available teachers -->
         </select>
 
         <label for="teacher_subject_id">Subject:</label>
-        <select id="teacher_subject_id" name="subject_id">
+        <select id="teacher_subject_id" name="subject_id" data-value="subject_name">
             <!-- Options populated dynamically based on available subjects -->
         </select>
 
@@ -187,7 +187,7 @@
     <form data-table="course_materials">
         <h2>Course materials</h2>
         <label for="materials_course_id">Course:</label>
-        <select id="materials_course_id" name="course_id">
+        <select id="materials_course_id" name="course_id" data-value="course_name">
             <!-- Options populated dynamically based on available courses -->
         </select>
 
@@ -209,7 +209,7 @@
         <input type="date" id="event_date" name="event_date" required>
         <br>
         <label for="event_department_id">Department:</label>
-        <select id="event_department_id" name="department_id" required>
+        <select id="event_department_id" name="department_id" data-value="title" required>
             <!-- Options populated dynamically based on available departments -->
         </select>
         <br>
@@ -227,7 +227,7 @@
     <form data-table="teacher_research">
         <h2>Teacher Researches</h2>
         <label for="researches_teacher_id">Teacher:</label>
-        <select id="researches_teacher_id" name="teacher_id" required>
+        <select id="researches_teacher_id" name="teacher_id" data-value="first_name" required>
             <!-- Options populated dynamically based on available teachers -->
         </select>
         <br>
@@ -243,7 +243,7 @@
     <form data-table="teacher_internships">
         <h2>Teacher Internships</h2>
         <label for="teacher_id">Teacher:</label>
-        <select id="teacher_id" name="teacher_id" required>
+        <select id="teacher_id" name="teacher_id" data-value="first_name" required>
             <!-- Options populated dynamically based on available teachers -->
         </select>
         <br>
@@ -262,7 +262,7 @@
         <input type="text" id="curriculum_name" name="curriculum_name" required>
 
         <label for="department_id">Department:</label>
-        <select id="department_id" name="department_id" required>
+        <select id="department_id" name="department_id" data-value="title" required>
             <!-- Options populated dynamically based on available departments -->
         </select>
 
@@ -272,17 +272,17 @@
     <form data-table="study_plans">
         <h2>Study plans</h2>
         <label for="curriculum_id">Curriculum:</label>
-        <select id="curriculum_id" name="curriculum_id" required>
+        <select id="curriculum_id" name="curriculum_id" data-value="curriculum_name" required>
             <!-- Options populated dynamically based on available curriculums -->
         </select>
 
         <label for="plans_course_id">Course:</label>
-        <select id="plans_course_id" name="course_id" required>
+        <select id="plans_course_id" name="course_id" data-value="course_name" required>
             <!-- Options populated dynamically based on available courses -->
         </select>
 
         <label for="subject_id">Subject:</label>
-        <select id="subject_id" name="subject_id" required>
+        <select id="subject_id" name="subject_id" data-value="subject_name" required>
             <!-- Options populated dynamically based on available subjects -->
         </select>
 
@@ -292,12 +292,12 @@
     <form data-table="grade_sheets">
         <h2>Grade sheets</h2>
         <label for="sheets_student_id">Student:</label>
-        <select id="sheets_student_id" name="student_id" required>
+        <select id="sheets_student_id" name="student_id" data-value="first_name" required>
             <!-- Options populated dynamically based on available students -->
         </select>
 
         <label for="course_id">Course:</label>
-        <select id="course_id" name="course_id" required>
+        <select id="course_id" name="course_id" data-value="course_name" required>
             <!-- Options populated dynamically based on available courses -->
         </select>
 
@@ -312,7 +312,7 @@
         <input type="text" id="project_name" name="project_name" required>
 
         <label for="projects_student_id">Student:</label>
-        <select id="projects_student_id" name="student_id" required>
+        <select id="projects_student_id" name="student_id" data-value="first_name" required>
             <!-- Options populated dynamically based on available students -->
         </select>
 
@@ -325,12 +325,12 @@
     <form data-table="foreign_languages">
         <h2>Foreign languages</h2>
         <label for="language_id">Language:</label>
-        <select id="language_id" name="language_id">
+        <select id="language_id" name="language_id" data-value="language_name">
             <!-- Options populated dynamically -->
         </select>
 
         <label for="student_id">Student:</label>
-        <select id="student_id" name="student_id">
+        <select id="student_id" name="student_id" data-value="first_name">
             <!-- Options populated dynamically -->
         </select>
 

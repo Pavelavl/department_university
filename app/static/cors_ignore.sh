@@ -1,1 +1,1 @@
-chromium-browser --disable-web-security --user-data-dir="[some directory here]"
+chromium-browser --disable-web-security

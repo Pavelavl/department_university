@@ -67,14 +67,15 @@ button:hover {
 /* Tab content styles */
 .tab-content {
     display: none;
-    padding: 20px;
+    padding: 50px;
     border: 1px solid #ccc;
     border-top: none; /* Remove top border for active tab content */
     border-radius: 0 0 5px 5px;
 }
 
 .tab-content.active {
-    display: block;
+    display: flex;
+    flex-flow: column;
 }
 
 /* Table styles */
@@ -115,4 +116,18 @@ pre {
 
 p {
     font-size: 20px;
+}
+
+.rows_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rows_container form {
+    width: 100%;
+}
+
+.rows_container form textarea {
+    width: 80%;
 }
