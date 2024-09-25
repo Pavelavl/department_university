@@ -101,11 +101,9 @@ tabs.forEach(tab => {
     tab.addEventListener('click', () => {
         const target = document.querySelector(tab.dataset.tabTarget);
 
-        // Remove active class from all tabs and tab contents
         tabs.forEach(t => t.classList.remove('active'));
         tabContents.forEach(content => content.classList.remove('active'));
-
-        // Add active class to clicked tab and its corresponding content
+ 
         tab.classList.add('active');
         target.classList.add('active');
     });
@@ -163,7 +161,6 @@ function init() {
                     break;
             }
 
-            // Добавьте следующий код для добавления в контейнер HTML с идентификатором "upd_del" возможности изменять JSON-объект:
             const jsonElementOuter = document.createElement("div");
             jsonElementOuter.style.display = "flex";
             jsonElementOuter.style.justifyContent = "center";
